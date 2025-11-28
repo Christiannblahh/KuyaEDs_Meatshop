@@ -25,6 +25,11 @@ class Sales extends BaseController
     public function create()
     {
         if ($this->request->getMethod() === 'post') {
+            $customerName = $this->request->getPost('customer_name');
+            $paymentMethod = $this->request->getPost('payment_method') ?? 'cash';
+            $discount = (float) ($this->request->getPost('discount') ?? 0);
+            $tax = (float) ($this->request->getPost('tax') ?? 0);
+            
             $productIds = (array) $this->request->getPost('product_id');
             $quantities = (array) $this->request->getPost('quantity');
 
@@ -42,6 +47,10 @@ class Sales extends BaseController
                 }
 
                 $product   = $this->products->find($pid);
+                if (!$product) {
+                    continue;
+                }
+                
                 $unitPrice = (float) $product['unit_price'];
                 $lineTotal = $unitPrice * $qty;
 
@@ -59,16 +68,24 @@ class Sales extends BaseController
                 return redirect()->back()->with('error', 'Please add at least one product.');
             }
 
+            // Apply discount and tax
+            $subtotal = $totalAmount;
+            $totalAmount = $totalAmount - $discount + $tax;
+
             $db = db_connect();
             $db->transStart();
 
             $saleId = $this->sales->insert([
-                'sale_date'    => date('Y-m-d H:i:s'),
-                'total_amount' => $totalAmount,
+                'sale_date'      => date('Y-m-d H:i:s'),
+                'customer_name'  => $customerName,
+                'payment_method' => $paymentMethod,
+                'subtotal'       => $subtotal,
+                'discount'       => $discount,
+                'tax'            => $tax,
+                'total_amount'   => $totalAmount,
             ]);
 
             foreach ($lines as $line) {
-                // Deduct stock; if not enough, rollback and abort
                 if (!$this->batches->deductStock($line['product_id'], $line['quantity'])) {
                     $db->transRollback();
                     return redirect()->back()->with('error', 'Not enough stock for one of the products.');
@@ -84,7 +101,7 @@ class Sales extends BaseController
                 return redirect()->back()->with('error', 'Could not save sale.');
             }
 
-            return redirect()->to('/sales/create')->with('success', 'Sale recorded successfully.');
+            return redirect()->to('/sales/create')->with('success', 'Sale recorded successfully! Total: ₱' . number_format($totalAmount, 2));
         }
 
         $data['products'] = $this->products->withStock();
@@ -95,5 +112,3 @@ class Sales extends BaseController
         ]);
     }
 }
-
-

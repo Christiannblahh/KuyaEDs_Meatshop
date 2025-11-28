@@ -32,7 +32,6 @@ class StockBatchModel extends Model
         $batches = $this->where('product_id', $productId)
             ->where('remaining_quantity >', 0)
             ->orderBy('expiry_date IS NULL, expiry_date ASC, id ASC')
-            ->lockForUpdate()
             ->findAll();
 
         // Calculate total available

@@ -18,6 +18,8 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function (RouteCol
 
     $routes->get('products', 'Products::index');
     $routes->match(['get', 'post'], 'products/create', 'Products::create');
+    $routes->match(['get', 'post'], 'products/edit/(:num)', 'Products::edit/$1');
+    $routes->get('products/delete/(:num)', 'Products::delete/$1');
 
     $routes->get('inventory', 'Inventory::index');
     $routes->match(['get', 'post'], 'inventory/add', 'Inventory::addStock');

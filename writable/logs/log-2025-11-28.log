@@ -1,0 +1,1367 @@
+ERROR - 2025-11-28 08:39:19 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(18): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(18): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:39:19 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Products.php(18): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:39:22 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(18): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(18): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:39:22 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Products.php(18): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:39:24 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Inventory.php(24): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Inventory->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inventory))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Inventory.php(24): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Inventory->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inventory))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:39:24 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: inventory]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Inventory.php(24): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Inventory->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inventory))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:39:25 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Sales.php(90): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Sales->create()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Sales.php(90): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Sales->create()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:39:25 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: sales/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Sales.php(90): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->create()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:39:27 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT DATE(sal...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\SaleModel.php(28): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Reports.php(34): App\Models\SaleModel->daily('2025-11-28', '2025-11-28')
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Reports->sales()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT DATE(sal...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\SaleModel.php(28): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Reports.php(34): App\Models\SaleModel->daily('2025-11-28', '2025-11-28')
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Reports->sales()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:39:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: reports/sales]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT DATE(sale_date) AS date, SUM(total_amount) AS total
+FROM `sales`
+WHERE `sale_date` >= :sale_date:
+AND `sale_date` <= :sale_date.1:
+GROUP BY DATE(sale_date)
+ORDER BY DATE(sale_date) ASC', [...], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\SaleModel.php(28): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Reports.php(34): App\Models\SaleModel->daily('2025-11-28', '2025-11-28')
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->sales()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:54:20 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(31): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(31): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+ERROR - 2025-11-28 08:54:20 --> Order menu error: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+ERROR - 2025-11-28 08:54:23 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(31): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(31): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:54:23 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Products.php(31): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:54:26 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(31): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(31): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+ERROR - 2025-11-28 08:54:26 --> Order menu error: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+ERROR - 2025-11-28 08:55:27 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(31): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(31): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:55:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Products.php(31): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:55:32 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(31): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(31): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+ERROR - 2025-11-28 08:55:32 --> Order menu error: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+ERROR - 2025-11-28 08:55:33 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Sales.php(90): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Sales->create()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Sales.php(90): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Sales->create()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:55:33 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: sales/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Sales.php(90): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Sales->create()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sales))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:55:36 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT DATE(sal...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\SaleModel.php(28): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Reports.php(34): App\Models\SaleModel->daily('2025-11-28', '2025-11-28')
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Reports->sales()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT DATE(sal...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\SaleModel.php(28): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Reports.php(34): App\Models\SaleModel->daily('2025-11-28', '2025-11-28')
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Reports->sales()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:55:36 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: reports/sales]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT DATE(sale_date) AS date, SUM(total_amount) AS total
+FROM `sales`
+WHERE `sale_date` >= :sale_date:
+AND `sale_date` <= :sale_date.1:
+GROUP BY DATE(sale_date)
+ORDER BY DATE(sale_date) ASC', [...], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\SaleModel.php(28): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Reports.php(34): App\Models\SaleModel->daily('2025-11-28', '2025-11-28')
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reports->sales()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reports))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:55:39 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'meatshop_db', 3306, '', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Inventory.php(24): App\Models\ProductModel->withStock()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Inventory->index()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inventory))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'meatshop_db' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `product...', Array, false)
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Inventory.php(24): App\Models\ProductModel->withStock()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Inventory->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inventory))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:55:39 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'meatshop_db'
+[Method: GET, Route: inventory]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `products`.*, COALESCE(SUM(stock_batches.remaining_quantity), 0) AS total_stock
+FROM `products`
+LEFT JOIN `stock_batches` ON `stock_batches`.`product_id` = `products`.`id`
+GROUP BY `products`.`id`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\ProductModel.php(33): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Inventory.php(24): App\Models\ProductModel->withStock()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Inventory->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inventory))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:58:07 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:58:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:58:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:58:07 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:58:45 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:58:45 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:58:45 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:58:45 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:58:57 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:58:57 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:58:57 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:58:57 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:59:08 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:59:08 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:59:08 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:59:08 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 08:59:37 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 08:59:37 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:59:37 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 08:59:37 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(34): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 09:07:07 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 09:07:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:07:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:07:07 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 09:09:49 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 09:09:49 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:09:49 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:09:49 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-28 09:10:45 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Products->index()
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-28 09:10:45 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+[Method: GET, Route: products]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:10:45 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:10:45 --> [Caused by] mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `category`
+FROM `products`
+WHERE `category` IS NOT NULL', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Products.php(36): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:27:36 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\StockBatchModel::lockForUpdate
+[Method: POST, Route: order/checkout]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Models\StockBatchModel.php(35): CodeIgniter\Model->__call('lockForUpdate', [])
+ 2 APPPATH\Controllers\Order.php(234): App\Models\StockBatchModel->deductStock(9, 1.0)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Order->checkout()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:30:06 --> TypeError: CodeIgniter\CLI\InputOutput::input(): Return value must be of type string, bool returned
+[Method: CLI, Route: migrate:refresh]
+in SYSTEMPATH\CLI\InputOutput.php on line 46.
+ 1 SYSTEMPATH\CLI\CLI.php(260): CodeIgniter\CLI\InputOutput->input()
+ 2 SYSTEMPATH\Commands\Database\MigrateRefresh.php(78): CodeIgniter\CLI\CLI::prompt('Are you sure you want to refresh?', [...])
+ 3 SYSTEMPATH\CLI\Commands.php(74): CodeIgniter\Commands\Database\MigrateRefresh->run([...])
+ 4 SYSTEMPATH\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate:refresh', [])
+ 5 SYSTEMPATH\Boot.php(388): CodeIgniter\CLI\Console->run()
+ 6 SYSTEMPATH\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 7 ROOTPATH\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:14 --> Error: Class "App\Models\ProductModel" not found
+[Method: POST, Route: products/edit/3]
+in APPPATH\Controllers\Products.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Products->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:16 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: products/edit/3]
+in APPPATH\Controllers\Products.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Products->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:17 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: products]
+in APPPATH\Controllers\Products.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Products->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:18 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: order]
+in APPPATH\Controllers\Order.php on line 19.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Order->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:20 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: inventory/add]
+in APPPATH\Controllers\Inventory.php on line 15.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Inventory->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:21 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: inventory]
+in APPPATH\Controllers\Inventory.php on line 15.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Inventory->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:24 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: inventory/add]
+in APPPATH\Controllers\Inventory.php on line 15.
+ 1 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Inventory->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-28 09:52:30 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: /]
+in APPPATH\Controllers\Home.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+CRITICAL - 2025-11-28 09:52:43 --> Error: Class "App\Models\ProductModel" not found
+[Method: GET, Route: /]
+in APPPATH\Controllers\Home.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+ERROR - 2025-11-28 10:01:59 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`NULL`, `expiry_date` ASC, `id` ASC' at line 5 in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\app\Models\StockBatchModel.php(35): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(234): App\Models\StockBatchModel->deductStock(1, 1.0)
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->checkout()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-28 10:01:59 --> Error: Call to a member function getResult() on bool
+[Method: POST, Route: order/checkout]
+in SYSTEMPATH\Model.php on line 287.
+ 1 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 2 APPPATH\Models\StockBatchModel.php(35): CodeIgniter\BaseModel->findAll()
+ 3 APPPATH\Controllers\Order.php(234): App\Models\StockBatchModel->deductStock(1, 1.0)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Order->checkout()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

@@ -39,6 +39,7 @@
 <div class="card shadow-sm">
     <div class="card-body">
         <form method="post">
+            <?= csrf_field() ?>
             <div class="mb-3">
                 <label class="form-label fw-bold">Product <span class="text-danger">*</span></label>
                 <select name="product_id" class="form-select form-select-lg" required>
@@ -63,8 +64,9 @@
                            step="0.01" 
                            name="quantity" 
                            class="form-control" 
-                           placeholder="0.00"
+                           placeholder="Enter quantity"
                            min="0.01"
+                           value=""
                            required>
                     <span class="input-group-text" id="unit-display">-</span>
                 </div>
