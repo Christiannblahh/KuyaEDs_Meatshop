@@ -1,0 +1,29 @@
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+$routes->get('/', 'Home::index');
+
+// Kuya EDs Meatshop routes
+$routes->group('', ['namespace' => 'App\Controllers'], static function (RouteCollection $routes): void {
+    $routes->get('order', 'Order::index');
+    $routes->get('order/cart', 'Order::cart');
+    $routes->post('order/addToCart', 'Order::addToCart');
+    $routes->post('order/updateCart', 'Order::updateCart');
+    $routes->post('order/removeFromCart', 'Order::removeFromCart');
+    $routes->post('order/checkout', 'Order::checkout');
+
+    $routes->get('products', 'Products::index');
+    $routes->match(['get', 'post'], 'products/create', 'Products::create');
+
+    $routes->get('inventory', 'Inventory::index');
+    $routes->match(['get', 'post'], 'inventory/add', 'Inventory::addStock');
+
+    $routes->match(['get', 'post'], 'sales/create', 'Sales::create');
+
+    $routes->get('reports/sales', 'Reports::sales');
+    $routes->get('reports/alerts', 'Reports::alerts');
+});
