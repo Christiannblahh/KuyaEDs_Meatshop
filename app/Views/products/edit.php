@@ -17,9 +17,23 @@
     </div>
 <?php endif; ?>
 
+<?php if (session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i> <?= esc(session()->getFlashdata('error')) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show text-center fw-bold" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> <?= esc(session()->getFlashdata('success')) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php endif; ?>
+
 <div class="card shadow-sm">
     <div class="card-body">
-        <form method="post">
+        <form method="post" action="<?= site_url('products/edit/' . $product['id']) ?>" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <div class="row">
                 <div class="col-md-6">
@@ -51,30 +65,50 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Low Stock Threshold</label>
-                <input type="number" step="0.01" name="low_stock_threshold" class="form-control" value="<?= esc($product['low_stock_threshold'] ?? 0) ?>" placeholder="Alert when stock goes below this value">
-                <small class="form-text text-muted">Leave empty or 0 to disable low stock alerts</small>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label fw-bold">Description</label>
-                <textarea name="description" class="form-control" rows="4" placeholder="Brief description of the product..."><?= esc($product['description'] ?? '') ?></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label fw-bold">Image URL</label>
-                <input type="url" name="image_url" class="form-control" value="<?= esc($product['image_url'] ?? '') ?>" placeholder="https://example.com/image.jpg">
-                <small class="form-text text-muted">Enter a URL to an image of the product</small>
-                <?php if (!empty($product['image_url'])): ?>
-                    <div class="mt-2">
-                        <img src="<?= esc($product['image_url']) ?>" alt="Product Image" style="max-width: 150px; max-height: 150px;" class="rounded">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Low Stock Threshold</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" name="low_stock_threshold" class="form-control" value="<?= esc($product['low_stock_threshold'] ?? 0) ?>" placeholder="0.00" min="0">
+                            <span class="input-group-text" id="unit-threshold-display"><?= esc($product['unit'] ?? '-') ?></span>
+                        </div>
+                        <small class="form-text text-muted">Optional: Alert when stock goes below this value. Leave empty to disable.</small>
                     </div>
-                <?php endif; ?>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Product Image</label>
+                        <input type="file" name="product_image" id="product_image" class="form-control" accept="image/*" onchange="previewImage(this)">
+                        <small class="form-text text-muted">Upload new image to replace current (JPG, PNG, GIF - Max 2MB)</small>
+                        <?php 
+                        // Helper function to get image URL
+                        helper('image');
+                        $imagePath = !empty($product['image_url']) ? product_image_url($product['image_url']) : '';
+                        ?>
+                        <?php if (!empty($imagePath)): ?>
+                            <div class="mt-2">
+                                <p class="small text-muted mb-1">Current Image:</p>
+                                <img src="<?= esc($imagePath) ?>" alt="Current Product Image" id="current-image" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" name="remove_image" id="removeImage" value="1">
+                                    <label class="form-check-label" for="removeImage">Remove current image</label>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div id="image-preview" class="mt-2" style="display: none;">
+                            <p class="small text-muted mb-1">New Image Preview:</p>
+                            <img id="preview-img" src="" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                            <button type="button" class="btn btn-sm btn-danger ms-2" onclick="removeImage()">
+                                <i class="bi bi-x-circle"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary btn-lg">
+                <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
                     <i class="bi bi-check-circle"></i> Update Product
                 </button>
                 <a href="<?= site_url('products') ?>" class="btn btn-secondary btn-lg">
@@ -87,3 +121,72 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitBtn = document.getElementById('submit-btn');
+    const imageInput = document.getElementById('product_image');
+    
+    if (form && submitBtn) {
+        form.addEventListener('submit', function(e) {
+            // Validate image file size (2MB max)
+            if (imageInput && imageInput.files.length > 0) {
+                const file = imageInput.files[0];
+                const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    e.preventDefault();
+                    alert('Image file size must be less than 2MB. Please choose a smaller image.');
+                    imageInput.focus();
+                    return false;
+                }
+            }
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Updating...';
+        });
+    }
+    
+    // Image preview function
+    window.previewImage = function(input) {
+        const preview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const currentImage = document.getElementById('current-image');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+                if (currentImage) {
+                    currentImage.style.opacity = '0.5';
+                }
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.style.display = 'none';
+            if (currentImage) {
+                currentImage.style.opacity = '1';
+            }
+        }
+    };
+    
+    // Remove image function
+    window.removeImage = function() {
+        const imageInput = document.getElementById('product_image');
+        const preview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const currentImage = document.getElementById('current-image');
+        
+        imageInput.value = '';
+        previewImg.src = '';
+        preview.style.display = 'none';
+        if (currentImage) {
+            currentImage.style.opacity = '1';
+        }
+    };
+});
+</script>

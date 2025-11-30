@@ -24,18 +24,37 @@ class Reports extends BaseController
         $range = $this->request->getGet('range') ?? 'daily';
 
         $data['range'] = $range;
+        $data['rows'] = [];
 
         if ($range === 'daily') {
             $start = $this->request->getGet('start') ?? date('Y-m-d');
             $end   = $this->request->getGet('end') ?? date('Y-m-d');
 
+            // Validate dates
+            if (empty($start) || empty($end)) {
+                $start = date('Y-m-d');
+                $end   = date('Y-m-d');
+            }
+
             $data['start'] = $start;
             $data['end']   = $end;
-            $data['rows']  = $this->sales->daily($start, $end);
+            
+            // Get sales data
+            $rows = $this->sales->daily($start, $end);
+            $data['rows'] = is_array($rows) ? $rows : [];
+            
+            // Log for debugging
+            log_message('info', 'Sales report - Start: ' . $start . ', End: ' . $end . ', Rows: ' . count($data['rows']));
         } elseif ($range === 'monthly') {
             $year          = (int) ($this->request->getGet('year') ?? date('Y'));
             $data['year']  = $year;
-            $data['rows']  = $this->sales->monthly($year);
+            
+            // Get monthly sales data
+            $rows = $this->sales->monthly($year);
+            $data['rows'] = is_array($rows) ? $rows : [];
+            
+            // Log for debugging
+            log_message('info', 'Sales report - Year: ' . $year . ', Rows: ' . count($data['rows']));
         }
 
         return view('layout', [

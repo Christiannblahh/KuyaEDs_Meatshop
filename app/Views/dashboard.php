@@ -77,7 +77,7 @@
                     <a href="<?= site_url('sales/create') ?>" class="btn btn-success">
                         <i class="bi bi-receipt"></i> Record Sale
                     </a>
-                    <a href="<?= site_url('inventory/add') ?>" class="btn btn-info">
+                    <a href="<?= site_url('inventory/quick-add') ?>" class="btn btn-info">
                         <i class="bi bi-plus-circle"></i> Add Stock
                     </a>
                     <a href="<?= site_url('products/create') ?>" class="btn btn-secondary">

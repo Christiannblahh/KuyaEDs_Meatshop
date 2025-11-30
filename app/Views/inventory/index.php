@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Inventory</h2>
-    <a href="<?= site_url('inventory/add') ?>" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Add Stock
+    <a href="<?= site_url('inventory/quick-add') ?>" class="btn btn-success">
+        <i class="bi bi-table"></i> Quick Add Stock
     </a>
 </div>
 
@@ -58,27 +58,37 @@
                                      (float)$p['total_stock'] < (float)$p['low_stock_threshold'] && 
                                      (float)$p['low_stock_threshold'] > 0;
                         ?>
-                        <tr class="<?= $isLowStock ? 'table-warning' : '' ?>">
+                        <?php 
+                        $totalStock = (float)($p['total_stock'] ?? 0);
+                        $rowClass = $totalStock <= 0 ? 'table-danger' : ($isLowStock ? 'table-warning' : '');
+                        ?>
+                        <tr class="<?= $rowClass ?>">
                             <td><strong><?= esc($p['name']) ?></strong></td>
                             <td><?= esc($p['category'] ?? 'N/A') ?></td>
                             <td><?= esc($p['unit'] ?? 'N/A') ?></td>
                             <td>
-                                <span class="fw-bold <?= $isLowStock ? 'text-warning' : 'text-success' ?>">
-                                    <?= number_format($p['total_stock'] ?? 0, 2) ?>
+                                <?php 
+                                $totalStock = (float)($p['total_stock'] ?? 0);
+                                $stockClass = $totalStock <= 0 ? 'text-danger' : ($isLowStock ? 'text-warning' : 'text-success');
+                                ?>
+                                <span class="fw-bold <?= $stockClass ?>">
+                                    <?= number_format($totalStock, 2) ?>
                                 </span>
                             </td>
                             <td><?= number_format($p['low_stock_threshold'] ?? 0, 2) ?></td>
                             <td>
-                                <?php if ($isLowStock): ?>
-                                    <span class="badge bg-warning text-dark">Low Stock</span>
-                                <?php elseif ((float)($p['total_stock'] ?? 0) > 0): ?>
-                                    <span class="badge bg-success">In Stock</span>
-                                <?php else: ?>
+                                <?php 
+                                $totalStock = (float)($p['total_stock'] ?? 0);
+                                if ($totalStock <= 0): ?>
                                     <span class="badge bg-danger">Out of Stock</span>
+                                <?php elseif ($isLowStock): ?>
+                                    <span class="badge bg-warning text-dark">Low Stock</span>
+                                <?php else: ?>
+                                    <span class="badge bg-success">In Stock</span>
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="<?= site_url('inventory/add?product_id=' . $p['id']) ?>" 
+                                <a href="<?= site_url('inventory/quick-add') ?>" 
                                    class="btn btn-sm btn-outline-primary" 
                                    title="Add Stock">
                                     <i class="bi bi-plus-lg"></i> Add Stock

@@ -43,7 +43,7 @@
                                             <?= number_format($p['low_stock_threshold'], 2) ?> <?= esc($p['unit']) ?>
                                         </td>
                                         <td>
-                                            <a href="<?= site_url('inventory/add?product_id=' . $p['id']) ?>" class="btn btn-sm btn-outline-primary">
+                                            <a href="<?= site_url('inventory/quick-add?product_id=' . $p['id']) ?>" class="btn btn-sm btn-outline-primary">
                                                 <i class="bi bi-plus-lg"></i> Add Stock
                                             </a>
                                         </td>

@@ -142,11 +142,15 @@
 <nav class="navbar navbar-expand-lg mb-4 pb-0">
     <?php
     $segment = '';
+    $currentPath = '';
     try {
         $request = \Config\Services::request();
-        $segment = is_object($request->uri) ? $request->uri->getSegment(1) : '';
+        $uri = $request->getUri();
+        $segment = is_object($uri) ? $uri->getSegment(1) : '';
+        $currentPath = is_object($uri) ? $uri->getPath() : '';
     } catch (\Throwable $e) {
         $segment = '';
+        $currentPath = '';
     }
     ?>
     <div class="container-fluid">
@@ -171,10 +175,10 @@
                     <a class="nav-link<?= $segment === 'sales' ? ' active' : '' ?>" href="<?= site_url('sales/create') ?>">Record Sale</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link<?= $segment === 'reports' ? ' active' : '' ?>" href="<?= site_url('reports/sales') ?>">Sales Reports</a>
+                    <a class="nav-link<?= strpos($currentPath, 'reports/sales') !== false ? ' active' : '' ?>" href="<?= site_url('reports/sales') ?>">Sales Reports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link<?= $segment === 'reports' ? ' active' : '' ?>" href="<?= site_url('reports/alerts') ?>">Alerts</a>
+                    <a class="nav-link<?= strpos($currentPath, 'reports/alerts') !== false ? ' active' : '' ?>" href="<?= site_url('reports/alerts') ?>">Alerts</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -188,7 +192,7 @@
                             $cartCount += $item['quantity'];
                         }
                         ?>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge-count" style="font-size: 0.7rem; <?= $cartCount > 0 ? '' : 'display: none;' ?>">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge-count" id="cart-badge" style="font-size: 0.7rem; <?= $cartCount > 0 ? '' : 'display: none;' ?>">
                             <?= $cartCount > 0 ? $cartCount : '' ?>
                         </span>
                     </a>
@@ -203,6 +207,30 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Cart badge update function
+function updateCartBadge() {
+    <?php 
+    $cart = session()->get('cart') ?? [];
+    $cartCount = 0;
+    foreach ($cart as $item) {
+        $cartCount += $item['quantity'] ?? 0;
+    }
+    ?>
+    const cartCount = <?= $cartCount ?>;
+    const badge = document.getElementById('cart-badge');
+    if (badge) {
+        if (cartCount > 0) {
+            badge.textContent = cartCount;
+            badge.style.display = '';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+}
+// Update on page load
+document.addEventListener('DOMContentLoaded', updateCartBadge);
+</script>
 </body>
 </html>
 

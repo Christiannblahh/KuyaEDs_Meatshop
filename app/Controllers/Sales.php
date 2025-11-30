@@ -25,7 +25,18 @@ class Sales extends BaseController
     public function create()
     {
         if ($this->request->getMethod() === 'post') {
-            $customerName = $this->request->getPost('customer_name');
+            // Check if this is an AJAX request
+            $isAjax = $this->request->isAJAX() || 
+                      $this->request->getHeaderLine('X-Requested-With') === 'XMLHttpRequest';
+            
+            // Set JSON response type for all POST requests (we're using AJAX now)
+            $this->response->setContentType('application/json');
+            
+            log_message('info', '=== SALE RECORDING STARTED ===');
+            log_message('info', 'POST data: ' . json_encode($this->request->getPost()));
+            log_message('info', 'Is AJAX: ' . ($isAjax ?? 'yes'));
+            
+            $customerName = trim($this->request->getPost('customer_name') ?? '');
             $paymentMethod = $this->request->getPost('payment_method') ?? 'cash';
             $discount = (float) ($this->request->getPost('discount') ?? 0);
             $tax = (float) ($this->request->getPost('tax') ?? 0);
@@ -65,7 +76,12 @@ class Sales extends BaseController
             }
 
             if (empty($lines)) {
-                return redirect()->back()->with('error', 'Please add at least one product.');
+                log_message('error', 'Sale recording - No products added');
+                $this->response->setContentType('application/json');
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Please add at least one product with quantity greater than 0.'
+                ]);
             }
 
             // Apply discount and tax
@@ -75,33 +91,123 @@ class Sales extends BaseController
             $db = db_connect();
             $db->transStart();
 
-            $saleId = $this->sales->insert([
-                'sale_date'      => date('Y-m-d H:i:s'),
-                'customer_name'  => $customerName,
-                'payment_method' => $paymentMethod,
-                'subtotal'       => $subtotal,
-                'discount'       => $discount,
-                'tax'            => $tax,
-                'total_amount'   => $totalAmount,
-            ]);
-
-            foreach ($lines as $line) {
-                if (!$this->batches->deductStock($line['product_id'], $line['quantity'])) {
+            try {
+                // Skip model validation since we already validated
+                $this->sales->skipValidation(true);
+                
+                $saleId = $this->sales->insert([
+                    'sale_date'      => date('Y-m-d H:i:s'),
+                    'customer_name'  => !empty($customerName) ? $customerName : null,
+                    'payment_method' => $paymentMethod,
+                    'subtotal'       => $subtotal,
+                    'discount'       => $discount,
+                    'tax'            => $tax,
+                    'total_amount'   => $totalAmount,
+                    'created_at'     => date('Y-m-d H:i:s'),
+                ]);
+                
+                // Re-enable validation
+                $this->sales->skipValidation(false);
+                
+                // Check for errors
+                $errors = $this->sales->errors();
+                if (!empty($errors)) {
                     $db->transRollback();
-                    return redirect()->back()->with('error', 'Not enough stock for one of the products.');
+                    $errorMsg = implode(', ', $errors);
+                    log_message('error', 'Sale creation errors: ' . $errorMsg);
+                    $this->response->setContentType('application/json');
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Error saving sale: ' . $errorMsg
+                    ]);
+                }
+                
+                if (!$saleId || $saleId === false) {
+                    $db->transRollback();
+                    log_message('error', 'Sale creation failed - no insert ID');
+                    $this->response->setContentType('application/json');
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Failed to save sale. Please try again.'
+                    ]);
                 }
 
-                $line['sale_id'] = $saleId;
-                $this->items->insert($line);
+                foreach ($lines as $line) {
+                    // Check stock before deducting
+                    $stock = $this->getProductStock($line['product_id']);
+                    if ($line['quantity'] > $stock) {
+                        $db->transRollback();
+                        $product = $this->products->find($line['product_id']);
+                        $errorMsg = "Not enough stock for {$product['name']}. Available: {$stock} {$product['unit']}";
+                        log_message('error', 'Sale recording - ' . $errorMsg);
+                        $this->response->setContentType('application/json');
+                        return $this->response->setJSON([
+                            'success' => false,
+                            'message' => $errorMsg
+                        ]);
+                    }
+                    
+                    // Deduct stock
+                    if (!$this->batches->deductStock($line['product_id'], $line['quantity'])) {
+                        $db->transRollback();
+                        log_message('error', 'Sale recording - Stock deduction failed for product ID: ' . $line['product_id']);
+                        $this->response->setContentType('application/json');
+                        return $this->response->setJSON([
+                            'success' => false,
+                            'message' => 'Not enough stock for one of the products.'
+                        ]);
+                    }
+
+                    $line['sale_id'] = $saleId;
+                    
+                    // Skip model validation for sale items
+                    $this->items->skipValidation(true);
+                    $this->items->insert($line);
+                    $this->items->skipValidation(false);
+                    
+                    // Check for errors
+                    $itemErrors = $this->items->errors();
+                    if (!empty($itemErrors)) {
+                        $db->transRollback();
+                        $errorMsg = implode(', ', $itemErrors);
+                        log_message('error', 'Sale item creation errors: ' . $errorMsg);
+                        $this->response->setContentType('application/json');
+                        return $this->response->setJSON([
+                            'success' => false,
+                            'message' => 'Error saving sale items: ' . $errorMsg
+                        ]);
+                    }
+                }
+
+                $db->transComplete();
+
+                if (! $db->transStatus()) {
+                    log_message('error', 'Sale recording - Transaction failed');
+                    $this->response->setContentType('application/json');
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Could not save sale. Please try again.'
+                    ]);
+                }
+
+                log_message('info', 'Sale recorded successfully - ID: ' . $saleId . ', Total: ' . $totalAmount);
+                $this->response->setContentType('application/json');
+                return $this->response->setJSON([
+                    'success' => true,
+                    'message' => 'Sale recorded successfully! Total: ₱' . number_format($totalAmount, 2),
+                    'sale_id' => $saleId,
+                    'total_amount' => $totalAmount
+                ]);
+                
+            } catch (\Exception $e) {
+                $db->transRollback();
+                log_message('error', 'Sale recording exception: ' . $e->getMessage());
+                $this->response->setContentType('application/json');
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'An error occurred: ' . $e->getMessage()
+                ]);
             }
-
-            $db->transComplete();
-
-            if (! $db->transStatus()) {
-                return redirect()->back()->with('error', 'Could not save sale.');
-            }
-
-            return redirect()->to('/sales/create')->with('success', 'Sale recorded successfully! Total: ₱' . number_format($totalAmount, 2));
         }
 
         $data['products'] = $this->products->withStock();
@@ -110,5 +216,19 @@ class Sales extends BaseController
             'title'   => 'Record Sale - Kuya EDs',
             'content' => view('sales/create', $data),
         ]);
+    }
+
+    /**
+     * Get current stock for a product
+     */
+    private function getProductStock(int $productId): float
+    {
+        $products = $this->products->withStock();
+        foreach ($products as $p) {
+            if ($p['id'] == $productId) {
+                return (float) ($p['total_stock'] ?? 0);
+            }
+        }
+        return 0;
     }
 }

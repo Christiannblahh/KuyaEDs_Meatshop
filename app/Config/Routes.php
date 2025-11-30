@@ -23,9 +23,13 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function (RouteCol
 
     $routes->get('inventory', 'Inventory::index');
     $routes->match(['get', 'post'], 'inventory/add', 'Inventory::addStock');
+    $routes->match(['get', 'post'], 'inventory/quick-add', 'Inventory::quickAdd');
 
     $routes->match(['get', 'post'], 'sales/create', 'Sales::create');
 
     $routes->get('reports/sales', 'Reports::sales');
     $routes->get('reports/alerts', 'Reports::alerts');
+    
+    // Image serving route for uploaded product images
+    $routes->get('image/(:any)', 'Products::serveImage/$1');
 });

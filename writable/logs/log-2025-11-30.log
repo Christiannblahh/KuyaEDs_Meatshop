@@ -1,0 +1,100 @@
+CRITICAL - 2025-11-30 16:17:00 --> ErrorException: Type of App\Models\SaleModel::$casts must be array (as in class CodeIgniter\BaseModel)
+[Method: GET, Route: reports/alerts]
+in APPPATH\Models\SaleModel.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-11-30 16:17:03 --> ErrorException: Type of App\Models\SaleModel::$casts must be array (as in class CodeIgniter\BaseModel)
+[Method: GET, Route: reports/alerts]
+in APPPATH\Models\SaleModel.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-11-30 16:17:04 --> ErrorException: Type of App\Models\SaleModel::$casts must be array (as in class CodeIgniter\BaseModel)
+[Method: GET, Route: reports/sales]
+in APPPATH\Models\SaleModel.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-11-30 16:17:06 --> ErrorException: Type of App\Models\ProductModel::$casts must be array (as in class CodeIgniter\BaseModel)
+[Method: GET, Route: sales/create]
+in APPPATH\Models\ProductModel.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-11-30 16:17:10 --> ErrorException: Type of App\Models\ProductModel::$casts must be array (as in class CodeIgniter\BaseModel)
+[Method: GET, Route: /]
+in APPPATH\Models\ProductModel.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-11-30 16:19:55 --> CodeIgniter\Exceptions\InvalidArgumentException: Field "cost_price" is not nullable, but null was passed.
+[Method: GET, Route: /]
+in SYSTEMPATH\DataCaster\DataCaster.php on line 144.
+ 1 SYSTEMPATH\DataConverter\DataConverter.php(80): CodeIgniter\DataCaster\DataCaster->castAs(null, 'cost_price', 'get')
+ 2 SYSTEMPATH\BaseModel.php(1934): CodeIgniter\DataConverter\DataConverter->fromDataSource([...])
+ 3 SYSTEMPATH\Model.php(291): CodeIgniter\BaseModel->convertToReturnType([...], 'array')
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\StockBatchModel.php(132): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Home.php(21): App\Models\StockBatchModel->expiringSoon(7)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+CRITICAL - 2025-11-30 16:19:56 --> CodeIgniter\Exceptions\InvalidArgumentException: Field "cost_price" is not nullable, but null was passed.
+[Method: GET, Route: /]
+in SYSTEMPATH\DataCaster\DataCaster.php on line 144.
+ 1 SYSTEMPATH\DataConverter\DataConverter.php(80): CodeIgniter\DataCaster\DataCaster->castAs(null, 'cost_price', 'get')
+ 2 SYSTEMPATH\BaseModel.php(1934): CodeIgniter\DataConverter\DataConverter->fromDataSource([...])
+ 3 SYSTEMPATH\Model.php(291): CodeIgniter\BaseModel->convertToReturnType([...], 'array')
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\StockBatchModel.php(132): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Home.php(21): App\Models\StockBatchModel->expiringSoon(7)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+CRITICAL - 2025-11-30 16:19:56 --> CodeIgniter\Exceptions\InvalidArgumentException: Field "cost_price" is not nullable, but null was passed.
+[Method: GET, Route: /]
+in SYSTEMPATH\DataCaster\DataCaster.php on line 144.
+ 1 SYSTEMPATH\DataConverter\DataConverter.php(80): CodeIgniter\DataCaster\DataCaster->castAs(null, 'cost_price', 'get')
+ 2 SYSTEMPATH\BaseModel.php(1934): CodeIgniter\DataConverter\DataConverter->fromDataSource([...])
+ 3 SYSTEMPATH\Model.php(291): CodeIgniter\BaseModel->convertToReturnType([...], 'array')
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\StockBatchModel.php(132): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Home.php(21): App\Models\StockBatchModel->expiringSoon(7)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+CRITICAL - 2025-11-30 16:19:56 --> CodeIgniter\Exceptions\InvalidArgumentException: Field "cost_price" is not nullable, but null was passed.
+[Method: GET, Route: /]
+in SYSTEMPATH\DataCaster\DataCaster.php on line 144.
+ 1 SYSTEMPATH\DataConverter\DataConverter.php(80): CodeIgniter\DataCaster\DataCaster->castAs(null, 'cost_price', 'get')
+ 2 SYSTEMPATH\BaseModel.php(1934): CodeIgniter\DataConverter\DataConverter->fromDataSource([...])
+ 3 SYSTEMPATH\Model.php(291): CodeIgniter\BaseModel->convertToReturnType([...], 'array')
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\StockBatchModel.php(132): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Home.php(21): App\Models\StockBatchModel->expiringSoon(7)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+CRITICAL - 2025-11-30 16:19:57 --> CodeIgniter\Exceptions\InvalidArgumentException: Field "cost_price" is not nullable, but null was passed.
+[Method: GET, Route: /]
+in SYSTEMPATH\DataCaster\DataCaster.php on line 144.
+ 1 SYSTEMPATH\DataConverter\DataConverter.php(80): CodeIgniter\DataCaster\DataCaster->castAs(null, 'cost_price', 'get')
+ 2 SYSTEMPATH\BaseModel.php(1934): CodeIgniter\DataConverter\DataConverter->fromDataSource([...])
+ 3 SYSTEMPATH\Model.php(291): CodeIgniter\BaseModel->convertToReturnType([...], 'array')
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\StockBatchModel.php(132): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\Home.php(21): App\Models\StockBatchModel->expiringSoon(7)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')

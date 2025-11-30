@@ -52,26 +52,36 @@
                     <thead class="table-light">
                         <tr>
                             <th><?= ($range ?? '') === 'monthly' ? 'Month' : 'Date' ?></th>
+                            <th class="text-center">Transactions</th>
                             <th class="text-end">Total Sales</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         $grandTotal = 0;
+                        $totalTransactions = 0;
                         foreach ($rows as $row): 
-                            $grandTotal += $row['total'];
+                            $total = (float) ($row['total'] ?? 0);
+                            $grandTotal += $total;
+                            $totalTransactions += (int) ($row['transaction_count'] ?? 0);
                         ?>
                             <tr>
                                 <td>
                                     <strong><?= esc($row['month'] ?? $row['date']) ?></strong>
                                 </td>
+                                <td class="text-center">
+                                    <span class="badge bg-info"><?= (int) ($row['transaction_count'] ?? 0) ?></span>
+                                </td>
                                 <td class="text-end">
-                                    <span class="badge bg-success">₱<?= number_format($row['total'], 2) ?></span>
+                                    <span class="badge bg-success">₱<?= number_format($total, 2) ?></span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                         <tr class="table-light fw-bold">
                             <td>TOTAL</td>
+                            <td class="text-center">
+                                <span class="badge bg-primary"><?= $totalTransactions ?></span>
+                            </td>
                             <td class="text-end">
                                 <span class="badge bg-primary">₱<?= number_format($grandTotal, 2) ?></span>
                             </td>
@@ -81,7 +91,7 @@
             </div>
 
             <div class="row mt-4">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card border-success">
                         <div class="card-body">
                             <h6 class="text-muted mb-1">Total Revenue</h6>
@@ -89,11 +99,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card border-info">
                         <div class="card-body">
+                            <h6 class="text-muted mb-1">Total Transactions</h6>
+                            <h3 class="text-info mb-0"><?= $totalTransactions ?></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-warning">
+                        <div class="card-body">
                             <h6 class="text-muted mb-1">Average <?= ($range ?? '') === 'monthly' ? 'Monthly' : 'Daily' ?> Sales</h6>
-                            <h3 class="text-info mb-0">₱<?= number_format(count($rows) > 0 ? $grandTotal / count($rows) : 0, 2) ?></h3>
+                            <h3 class="text-warning mb-0">₱<?= number_format(count($rows) > 0 ? $grandTotal / count($rows) : 0, 2) ?></h3>
                         </div>
                     </div>
                 </div>
@@ -101,7 +119,21 @@
         <?php else: ?>
             <div class="text-center py-5">
                 <i class="bi bi-graph-up" style="font-size: 3rem; color: #ccc;"></i>
-                <p class="text-muted mt-3">No sales data available for the selected period.</p>
+                <p class="text-muted mt-3 mb-2">No sales data available for the selected period.</p>
+                <?php if (($range ?? '') === 'daily'): ?>
+                    <p class="text-muted small">
+                        Selected period: <?= esc($start ?? date('Y-m-d')) ?> to <?= esc($end ?? date('Y-m-d')) ?>
+                    </p>
+                <?php else: ?>
+                    <p class="text-muted small">
+                        Selected year: <?= esc($year ?? date('Y')) ?>
+                    </p>
+                <?php endif; ?>
+                <p class="text-muted small mt-2">
+                    <a href="<?= site_url('sales/create') ?>" class="text-decoration-none">
+                        <i class="bi bi-plus-circle"></i> Record a sale to see data here
+                    </a>
+                </p>
             </div>
         <?php endif; ?>
     </div>
