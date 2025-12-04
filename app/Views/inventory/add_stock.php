@@ -121,19 +121,50 @@
                            placeholder="Enter quantity"
                            min="0.01"
                            value=""
+                           id="quantity-input"
                            required>
                     <span class="input-group-text" id="unit-display">-</span>
                 </div>
                 <small class="form-text text-muted">Enter the quantity to add</small>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Unit Cost (₱)</label>
+                <div class="input-group input-group-lg">
+                    <input type="text" 
+                           class="form-control" 
+                           id="cost-price-display"
+                           value="₱0.00"
+                           readonly
+                           style="background-color: #f8f9fa;">
+                    <span class="input-group-text">per unit</span>
+                </div>
+                <small class="form-text text-muted">Cost price per unit</small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Total Cost (₱)</label>
+                <div class="input-group input-group-lg">
+                    <input type="text" 
+                           class="form-control" 
+                           id="total-cost-display"
+                           value="₱0.00"
+                           readonly
+                           style="background-color: #e9ecef; font-weight: bold;">
+                    <span class="input-group-text">total</span>
+                </div>
+                <small class="form-text text-muted">Total cost for this batch</small>
+            </div>
             
+            <?php $defaultExpiryDate = date('Y-m-d', strtotime('+15 days')); ?>
             <div class="mb-4">
                 <label class="form-label fw-bold">Expiry Date (optional)</label>
                 <input type="date" 
                        name="expiry_date" 
                        class="form-control form-control-lg"
+                       value="<?= $defaultExpiryDate ?>"
                        min="<?= date('Y-m-d') ?>">
-                <small class="form-text text-muted">When does this batch expire? Leave blank if no expiry.</small>
+                <small class="form-text text-muted">Default set to 15 days from today. Change if needed.</small>
             </div>
             
             <div class="d-flex gap-2">
@@ -178,6 +209,56 @@ document.addEventListener('DOMContentLoaded', function() {
             unitDisplay.textContent = unit || '-';
         } else {
             unitDisplay.textContent = '-';
+        }
+    }
+
+    // Function to update cost price display
+    function updateCostPriceDisplay(productId) {
+        const option = productSelect.querySelector(`option[value="${productId}"]`);
+        const costPriceDisplay = document.getElementById('cost-price-display');
+        const totalCostDisplay = document.getElementById('total-cost-display');
+        const quantityInput = document.getElementById('quantity-input');
+        
+        if (option && costPriceDisplay) {
+            const productName = option.getAttribute('data-name');
+            
+            // Get cost price using PHP helper function
+            const costPrices = <?= json_encode(get_all_product_cost_prices()) ?>;
+            let costPrice = 0;
+            
+            // Find matching cost price (case insensitive)
+            for (const [name, price] of Object.entries(costPrices)) {
+                if (name.toLowerCase() === productName.toLowerCase()) {
+                    costPrice = price;
+                    break;
+                }
+            }
+            
+            costPriceDisplay.value = `₱${costPrice.toFixed(2)}`;
+            
+            // Calculate total cost if quantity is entered
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const totalCost = quantity * costPrice;
+            totalCostDisplay.value = `₱${totalCost.toFixed(2)}`;
+        } else {
+            costPriceDisplay.value = '₱0.00';
+            totalCostDisplay.value = '₱0.00';
+        }
+    }
+
+    // Function to calculate total cost
+    function calculateTotalCost() {
+        const quantityInput = document.getElementById('quantity-input');
+        const costPriceDisplay = document.getElementById('cost-price-display');
+        const totalCostDisplay = document.getElementById('total-cost-display');
+        
+        if (quantityInput && costPriceDisplay && totalCostDisplay) {
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const costPriceText = costPriceDisplay.value.replace('₱', '').replace(',', '');
+            const costPrice = parseFloat(costPriceText) || 0;
+            const totalCost = quantity * costPrice;
+            
+            totalCostDisplay.value = `₱${totalCost.toFixed(2)}`;
         }
     }
     
@@ -241,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (productDropdown) productDropdown.style.display = 'none';
         selectedProduct = productId;
         updateUnitDisplay(productId);
+        updateCostPriceDisplay(productId);
         
         // CRITICAL: Update hidden input field - this is what gets submitted
         const hiddenInput = document.getElementById('product-id-hidden');
@@ -288,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const option = this.options[this.selectedIndex];
                 if (productSearch) productSearch.value = option.getAttribute('data-name');
                 updateUnitDisplay(this.value);
+                updateCostPriceDisplay(this.value);
                 
                 // CRITICAL: Update hidden input field
                 const hiddenInput = document.getElementById('product-id-hidden');
@@ -304,12 +387,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Calculate total cost when quantity changes
+    const quantityInput = document.getElementById('quantity-input');
+    if (quantityInput) {
+        quantityInput.addEventListener('input', calculateTotalCost);
+    }
     
     // Initialize if product is pre-selected
     if (productSelect.value) {
         const option = productSelect.options[productSelect.selectedIndex];
         productSearch.value = option.getAttribute('data-name');
         updateUnitDisplay(productSelect.value);
+        updateCostPriceDisplay(productSelect.value);
         
         // Update hidden input field
         const hiddenInput = document.getElementById('product-id-hidden');
@@ -430,6 +520,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (productSelect) productSelect.value = '';
                     if (visibleSelect) visibleSelect.value = '';
                     if (unitDisplay) unitDisplay.textContent = '-';
+                    
+                    // Reset cost displays
+                    const costPriceDisplay = document.getElementById('cost-price-display');
+                    const totalCostDisplay = document.getElementById('total-cost-display');
+                    if (costPriceDisplay) costPriceDisplay.value = '₱0.00';
+                    if (totalCostDisplay) totalCostDisplay.value = '₱0.00';
                     
                     // Redirect to inventory after 1.5 seconds
                     setTimeout(() => {

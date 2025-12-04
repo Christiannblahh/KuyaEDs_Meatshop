@@ -9,12 +9,21 @@ $routes->get('/', 'Home::index');
 
 // Kuya EDs Meatshop routes
 $routes->group('', ['namespace' => 'App\Controllers'], static function (RouteCollection $routes): void {
+    // Customer Order System
     $routes->get('order', 'Order::index');
-    $routes->get('order/cart', 'Order::cart');
-    $routes->post('order/addToCart', 'Order::addToCart');
+    $routes->get('order/orders', 'Order::orders');
+    $routes->get('order/viewOrder', 'Order::viewOrder');
+    $routes->post('order/addToOrder', 'Order::addToOrder');
+    $routes->post('order/updateOrder', 'Order::updateOrder');
+    $routes->post('order/removeFromOrder', 'Order::removeFromOrder');
+    $routes->post('order/processPayment', 'Order::processPayment');
+    $routes->get('order/receipt/(:num)', 'Order::receipt/$1');
+    $routes->get('order/printReceipt/(:num)', 'Order::printReceipt/$1');
+    $routes->post('order/clearOrder', 'Order::clearOrder');
+    
+    // Backward compatibility for cart methods (still used by view_order.php)
     $routes->post('order/updateCart', 'Order::updateCart');
     $routes->post('order/removeFromCart', 'Order::removeFromCart');
-    $routes->post('order/checkout', 'Order::checkout');
 
     $routes->get('products', 'Products::index');
     $routes->match(['get', 'post'], 'products/create', 'Products::create');
@@ -24,6 +33,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function (RouteCol
     $routes->get('inventory', 'Inventory::index');
     $routes->match(['get', 'post'], 'inventory/add', 'Inventory::addStock');
     $routes->match(['get', 'post'], 'inventory/quick-add', 'Inventory::quickAdd');
+    $routes->post('inventory/discard-batch', 'Inventory::discardBatch');
 
     $routes->match(['get', 'post'], 'sales/create', 'Sales::create');
 

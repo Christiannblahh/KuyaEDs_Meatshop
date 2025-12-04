@@ -23,13 +23,12 @@ class Order extends BaseController
     }
 
     /**
-     * Display the menu with products
+     * Display the menu with products for ordering
      */
     public function index(): string
     {
         try {
             $data['products'] = $this->products->withStock();
-            $data['cartCount'] = $this->getCartCount();
             
             // Ensure products is an array
             if (!is_array($data['products'])) {
@@ -39,19 +38,44 @@ class Order extends BaseController
             // Log error and show empty products
             log_message('error', 'Order menu error: ' . $e->getMessage());
             $data['products'] = [];
-            $data['cartCount'] = 0;
         }
 
         return view('layout', [
-            'title'   => 'Order - Kuya EDs',
-            'content' => view('order/menu', $data),
+            'title'   => 'Place Order - Kuya EDs',
+            'content' => view('order/ordering', $data),
         ]);
     }
 
     /**
-     * Add item to cart
+     * List all customer orders
      */
-    public function addToCart()
+    public function orders(): string
+    {
+        try {
+            // Get all sales with customer names
+            $sales = $this->sales->orderBy('sale_date', 'DESC')->findAll();
+            
+            // Get sale items for each sale
+            foreach ($sales as &$sale) {
+                $sale['items'] = $this->items->where('sale_id', $sale['id'])->findAll();
+            }
+            
+            $data['sales'] = $sales ?? [];
+        } catch (\Exception $e) {
+            log_message('error', 'Order list error: ' . $e->getMessage());
+            $data['sales'] = [];
+        }
+
+        return view('layout', [
+            'title'   => 'Customer Orders - Kuya EDs',
+            'content' => view('order/customer_orders', $data),
+        ]);
+    }
+
+    /**
+     * Add item to order
+     */
+    public function addToOrder()
     {
         $productId = (int) $this->request->getPost('product_id');
         $quantity  = (float) $this->request->getPost('quantity');
@@ -80,20 +104,20 @@ class Order extends BaseController
             ]);
         }
 
-        $cart = session()->get('cart') ?? [];
+        $order = session()->get('current_order') ?? [];
         
-        // If product already in cart, update quantity
-        if (isset($cart[$productId])) {
-            $newQuantity = $cart[$productId]['quantity'] + $quantity;
+        // If product already in order, update quantity
+        if (isset($order[$productId])) {
+            $newQuantity = $order[$productId]['quantity'] + $quantity;
             if ($newQuantity > $stock) {
                 return $this->response->setJSON([
                     'success' => false,
                     'message' => 'Not enough stock available',
                 ]);
             }
-            $cart[$productId]['quantity'] = $newQuantity;
+            $order[$productId]['quantity'] = $newQuantity;
         } else {
-            $cart[$productId] = [
+            $order[$productId] = [
                 'product_id' => $productId,
                 'name'      => $product['name'],
                 'unit'      => $product['unit'],
@@ -104,115 +128,65 @@ class Order extends BaseController
         }
 
         // Recalculate line total
-        $cart[$productId]['line_total'] = $cart[$productId]['quantity'] * $cart[$productId]['unit_price'];
+        $order[$productId]['line_total'] = $order[$productId]['quantity'] * $order[$productId]['unit_price'];
 
-        session()->set('cart', $cart);
+        session()->set('current_order', $order);
 
         return $this->response->setJSON([
             'success' => true,
-            'message' => 'Added to cart',
-            'cartCount' => $this->getCartCount(),
+            'message' => 'Added to order',
+            'orderCount' => $this->getOrderCount(),
         ]);
     }
 
     /**
-     * Update cart item quantity
+     * Display current order
      */
-    public function updateCart()
+    public function viewOrder(): string
     {
-        $productId = (int) $this->request->getPost('product_id');
-        $quantity  = (float) $this->request->getPost('quantity');
-
-        $cart = session()->get('cart') ?? [];
-
-        if (!isset($cart[$productId])) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'Item not in cart',
-            ]);
-        }
-
-        if ($quantity <= 0) {
-            unset($cart[$productId]);
-        } else {
-            // Check stock
-            $stock = $this->getProductStock($productId);
-            if ($quantity > $stock) {
-                return $this->response->setJSON([
-                    'success' => false,
-                    'message' => 'Not enough stock available',
-                ]);
-            }
-
-            $cart[$productId]['quantity'] = $quantity;
-            $cart[$productId]['line_total'] = $quantity * $cart[$productId]['unit_price'];
-        }
-
-        session()->set('cart', $cart);
-
-        return $this->response->setJSON([
-            'success' => true,
-            'cartCount' => $this->getCartCount(),
-            'subtotal' => $this->getCartSubtotal(),
-        ]);
-    }
-
-    /**
-     * Remove item from cart
-     */
-    public function removeFromCart()
-    {
-        $productId = (int) $this->request->getPost('product_id');
-
-        $cart = session()->get('cart') ?? [];
-        unset($cart[$productId]);
-        session()->set('cart', $cart);
-
-        return $this->response->setJSON([
-            'success' => true,
-            'cartCount' => $this->getCartCount(),
-            'subtotal' => $this->getCartSubtotal(),
-        ]);
-    }
-
-    /**
-     * Display cart
-     */
-    public function cart(): string
-    {
-        $data['cart'] = session()->get('cart') ?? [];
-        $data['subtotal'] = $this->getCartSubtotal();
+        $data['order'] = session()->get('current_order') ?? [];
+        $data['subtotal'] = $this->getOrderSubtotal();
 
         return view('layout', [
-            'title'   => 'Your Order - Kuya EDs',
-            'content' => view('order/cart', $data),
+            'title'   => 'Current Order - Kuya EDs',
+            'content' => view('order/view_order', $data),
         ]);
     }
 
     /**
-     * Checkout - finalize the order
+     * Process cash payment and complete order
      */
-    public function checkout()
+    public function processPayment()
     {
-        $cart = session()->get('cart') ?? [];
+        $customerName = trim($this->request->getPost('customer_name')) ?: 'Walk-in Customer';
+        $customerPayment = (float) $this->request->getPost('customer_payment');
+        $order = session()->get('current_order') ?? [];
 
-        if (empty($cart)) {
-            return redirect()->to('/order/cart')->with('error', 'Your cart is empty.');
+        if (empty($order)) {
+            return redirect()->to('/order')->with('error', 'Your order is empty.');
         }
 
+        $totalAmount = $this->getOrderSubtotal();
+
+        if ($customerPayment < $totalAmount) {
+            return redirect()->to('/order/viewOrder')->with('error', 
+                'Insufficient payment. Required: ₱' . number_format($totalAmount, 2));
+        }
+
+        // Calculate change
+        $change = $customerPayment - $totalAmount;
+
         // Validate stock for all items
-        foreach ($cart as $item) {
+        foreach ($order as $item) {
             $stock = $this->getProductStock($item['product_id']);
             if ($item['quantity'] > $stock) {
-                return redirect()->to('/order/cart')->with('error', 
+                return redirect()->to('/order/viewOrder')->with('error', 
                     "Not enough stock for {$item['name']}. Available: {$stock} {$item['unit']}");
             }
         }
 
-        $totalAmount = $this->getCartSubtotal();
         $lines = [];
-
-        foreach ($cart as $item) {
+        foreach ($order as $item) {
             $lines[] = [
                 'product_id' => $item['product_id'],
                 'quantity'   => $item['quantity'],
@@ -227,15 +201,21 @@ class Order extends BaseController
         // Skip model validation since we're setting all required fields
         $this->sales->skipValidation(true);
         
+        // Generate unique receipt number
+        $receiptNumber = 'R' . date('Ymd') . str_pad($saleId ?? rand(1, 9999), 4, '0', STR_PAD_LEFT);
+        
         $saleId = $this->sales->insert([
-            'sale_date'     => date('Y-m-d H:i:s'),
-            'customer_name' => null, // Cart orders don't have customer name
-            'payment_method' => 'cash', // Default for cart orders
-            'subtotal'      => $totalAmount,
-            'discount'      => 0.00,
-            'tax'           => 0.00,
-            'total_amount'  => $totalAmount,
-            'created_at'    => date('Y-m-d H:i:s'),
+            'sale_date'      => date('Y-m-d H:i:s'),
+            'customer_name'  => $customerName,
+            'payment_method' => 'cash',
+            'subtotal'       => $totalAmount,
+            'discount'       => 0.00,
+            'tax'            => 0.00,
+            'total_amount'   => $totalAmount,
+            'receipt_number' => $receiptNumber,
+            'customer_payment' => $customerPayment,
+            'change_amount'  => $change,
+            'created_at'     => date('Y-m-d H:i:s'),
         ]);
         
         // Re-enable validation
@@ -245,7 +225,7 @@ class Order extends BaseController
             // Deduct stock
             if (!$this->batches->deductStock($line['product_id'], $line['quantity'])) {
                 $db->transRollback();
-                return redirect()->to('/order/cart')->with('error', 
+                return redirect()->to('/order/viewOrder')->with('error', 
                     'Not enough stock for one of the products.');
             }
 
@@ -260,45 +240,166 @@ class Order extends BaseController
         $db->transComplete();
 
         if (!$db->transStatus()) {
-            log_message('error', 'Order checkout transaction failed');
-            return redirect()->to('/order/cart')->with('error', 'Could not process order. Please try again.');
+            log_message('error', 'Order payment transaction failed');
+            return redirect()->to('/order/viewOrder')->with('error', 'Could not process order. Please try again.');
         }
         
         // Verify sale was created
         if (!$saleId || $saleId === false) {
-            log_message('error', 'Order checkout - sale ID not returned');
-            return redirect()->to('/order/cart')->with('error', 'Could not process order. Please try again.');
+            log_message('error', 'Order payment - sale ID not returned');
+            return redirect()->to('/order/viewOrder')->with('error', 'Could not process order. Please try again.');
         }
 
-        log_message('info', 'Order checkout successful - Sale ID: ' . $saleId . ', Total: ' . $totalAmount);
+        log_message('info', 'Order payment successful - Sale ID: ' . $saleId . ', Total: ' . $totalAmount);
 
-        // Clear cart
-        session()->remove('cart');
+        // Clear current order
+        session()->remove('current_order');
 
-        return redirect()->to('/order')->with('success', 'Order placed successfully! Thank you for your order.');
+        // Generate receipt and redirect
+        return redirect()->to('/order/receipt/' . $saleId);
     }
 
     /**
-     * Get cart item count
+     * Display receipt
      */
-    private function getCartCount(): int
+    public function receipt($saleId): string
     {
-        $cart = session()->get('cart') ?? [];
+        try {
+            $sale = $this->sales->find($saleId);
+            if (!$sale) {
+                return redirect()->to('/order/orders')->with('error', 'Sale not found.');
+            }
+
+            $sale['items'] = $this->items->where('sale_id', $saleId)->findAll();
+            
+            $data['sale'] = $sale;
+        } catch (\Exception $e) {
+            log_message('error', 'Receipt error: ' . $e->getMessage());
+            return redirect()->to('/order/orders')->with('error', 'Could not load receipt.');
+        }
+
+        return view('layout', [
+            'title'   => 'Receipt - Kuya EDs',
+            'content' => view('order/receipt', $data),
+        ]);
+    }
+
+    /**
+     * Print receipt
+     */
+    public function printReceipt($saleId): string
+    {
+        try {
+            $sale = $this->sales->find($saleId);
+            if (!$sale) {
+                return redirect()->to('/order/orders')->with('error', 'Sale not found.');
+            }
+
+            $sale['items'] = $this->items->where('sale_id', $saleId)->findAll();
+            
+            $data['sale'] = $sale;
+        } catch (\Exception $e) {
+            log_message('error', 'Print receipt error: ' . $e->getMessage());
+            return redirect()->to('/order/orders')->with('error', 'Could not load receipt.');
+        }
+
+        return view('order/print_receipt', $data);
+    }
+
+    /**
+     * Clear current order
+     */
+    public function clearOrder()
+    {
+        session()->remove('current_order');
+        
+        return $this->response->setJSON([
+            'success' => true,
+            'message' => 'Order cleared',
+        ]);
+    }
+
+    /**
+     * Update order item quantity (for view_order.php)
+     */
+    public function updateOrder()
+    {
+        $productId = (int) $this->request->getPost('product_id');
+        $quantity  = (float) $this->request->getPost('quantity');
+
+        $order = session()->get('current_order') ?? [];
+
+        if (!isset($order[$productId])) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Item not in order',
+            ]);
+        }
+
+        if ($quantity <= 0) {
+            unset($order[$productId]);
+        } else {
+            // Check stock
+            $stock = $this->getProductStock($productId);
+            if ($quantity > $stock) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Not enough stock available',
+                ]);
+            }
+
+            $order[$productId]['quantity'] = $quantity;
+            $order[$productId]['line_total'] = $quantity * $order[$productId]['unit_price'];
+        }
+
+        session()->set('current_order', $order);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'orderCount' => $this->getOrderCount(),
+            'subtotal' => $this->getOrderSubtotal(),
+        ]);
+    }
+
+    /**
+     * Remove item from order (for view_order.php)
+     */
+    public function removeFromOrder()
+    {
+        $productId = (int) $this->request->getPost('product_id');
+
+        $order = session()->get('current_order') ?? [];
+        unset($order[$productId]);
+        session()->set('current_order', $order);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'orderCount' => $this->getOrderCount(),
+            'subtotal' => $this->getOrderSubtotal(),
+        ]);
+    }
+
+    /**
+     * Get order item count
+     */
+    private function getOrderCount(): int
+    {
+        $order = session()->get('current_order') ?? [];
         $count = 0;
-        foreach ($cart as $item) {
+        foreach ($order as $item) {
             $count += $item['quantity'];
         }
         return $count;
     }
 
     /**
-     * Get cart subtotal
+     * Get order subtotal
      */
-    private function getCartSubtotal(): float
+    private function getOrderSubtotal(): float
     {
-        $cart = session()->get('cart') ?? [];
+        $order = session()->get('current_order') ?? [];
         $total = 0;
-        foreach ($cart as $item) {
+        foreach ($order as $item) {
             $total += $item['line_total'];
         }
         return $total;

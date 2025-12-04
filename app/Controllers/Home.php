@@ -25,11 +25,8 @@ class Home extends BaseController
         $lowStockCount = count($lowStockProducts);
         $expiringCount = count($expiringBatches);
 
-        // Calculate total stock value
-        $totalStockValue = 0;
-        foreach ($productsWithStock as $product) {
-            $totalStockValue += ($product['total_stock'] * $product['unit_price']);
-        }
+        // Calculate weekly expenses (expenses from the past 7 days)
+        $weeklyExpenses = $this->calculateWeeklyExpenses();
 
         // Get today's sales
         $todaysSales = 0;
@@ -49,7 +46,7 @@ class Home extends BaseController
             'totalProducts' => $totalProducts,
             'lowStockCount' => $lowStockCount,
             'expiringCount' => $expiringCount,
-            'totalStockValue' => $totalStockValue,
+            'weeklyExpenses' => $weeklyExpenses,
             'todaysSales' => $todaysSales,
             'totalSalesAllTime' => $totalSalesAllTime,
         ];
@@ -60,5 +57,29 @@ class Home extends BaseController
             'title'   => 'Kuya EDs Meatshop',
             'content' => $content,
         ]);
+    }
+
+    /**
+     * Calculate expenses from stock purchases in the past 7 days
+     */
+    private function calculateWeeklyExpenses(): float
+    {
+        $batchModel = new StockBatchModel();
+        
+        // Get stock batches from the past 7 days
+        $sevenDaysAgo = date('Y-m-d H:i:s', strtotime('-7 days'));
+        
+        $weeklyBatches = $batchModel->where('created_at >=', $sevenDaysAgo)
+            ->where('cost_price >', 0)
+            ->findAll();
+        
+        $totalExpenses = 0.0;
+        
+        foreach ($weeklyBatches as $batch) {
+            $expense = (float) $batch['quantity'] * (float) $batch['cost_price'];
+            $totalExpenses += $expense;
+        }
+        
+        return $totalExpenses;
     }
 }

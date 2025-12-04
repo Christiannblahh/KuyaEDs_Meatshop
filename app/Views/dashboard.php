@@ -26,8 +26,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="text-muted mb-1">Total Stock Value</h6>
-                        <h3 class="mb-0">₱<?= number_format($totalStockValue ?? 0, 2) ?></h3>
+                        <h6 class="text-muted mb-1">Weeks Expenses</h6>
+                        <h3 class="mb-0">₱<?= number_format($weeklyExpenses ?? 0, 2) ?></h3>
                     </div>
                     <i class="bi bi-graph-up" style="font-size: 2rem; color: #198754;"></i>
                 </div>
@@ -73,9 +73,6 @@
                 <div class="d-grid gap-2">
                     <a href="<?= site_url('order') ?>" class="btn btn-primary">
                         <i class="bi bi-cart3"></i> New Order
-                    </a>
-                    <a href="<?= site_url('sales/create') ?>" class="btn btn-success">
-                        <i class="bi bi-receipt"></i> Record Sale
                     </a>
                     <a href="<?= site_url('inventory/quick-add') ?>" class="btn btn-info">
                         <i class="bi bi-plus-circle"></i> Add Stock
@@ -140,9 +137,9 @@
     <div class="col-md-4">
         <div class="card h-100 shadow-sm product-card">
             <div class="card-body">
-                <h5 class="card-title"><i class="bi bi-receipt text-info me-2"></i>Sales</h5>
-                <p class="card-text">Record customer purchases with automatic totals and stock deduction.</p>
-                <a href="<?= site_url('sales/create') ?>" class="btn btn-info">Record Sale</a>
+                <h5 class="card-title"><i class="bi bi-graph-up text-warning me-2"></i>Sales Reports</h5>
+                <p class="card-text">View daily and monthly sales totals, track revenue trends.</p>
+                <a href="<?= site_url('reports/sales') ?>" class="btn btn-outline-primary">View Reports</a>
             </div>
         </div>
     </div>

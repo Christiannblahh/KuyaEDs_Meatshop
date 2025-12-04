@@ -37,13 +37,20 @@
                         <th>Category</th>
                         <th>Current Stock</th>
                         <th>Unit</th>
+                        <th>Price (₱)</th>
                         <th>Quantity to Add</th>
+                        <th>Total Cost (₱)</th>
                         <th>Expiry Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($products as $p): ?>
+                        <?php
+                        // Get cost price for this product
+                        $costPrice = get_product_cost_price($p['name']) ?? 0;
+                        $defaultExpiryDate = date('Y-m-d', strtotime('+15 days'));
+                        ?>
                         <tr data-product-id="<?= $p['id'] ?>">
                             <td><strong><?= esc($p['name']) ?></strong></td>
                             <td><?= esc($p['category'] ?? 'N/A') ?></td>
@@ -54,17 +61,27 @@
                             </td>
                             <td><?= esc($p['unit'] ?? 'N/A') ?></td>
                             <td>
+                                <span class="badge bg-info text-white">
+                                    ₱<?= number_format($costPrice, 2) ?>
+                                </span>
+                            </td>
+                            <td>
                                 <input type="number" 
                                        step="0.01" 
                                        min="0.01" 
                                        class="form-control form-control-sm quantity-input" 
                                        placeholder="0.00"
                                        data-product-id="<?= $p['id'] ?>"
+                                       data-cost-price="<?= $costPrice ?>"
                                        style="width: 100px;">
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary total-cost" id="total-cost-<?= $p['id'] ?>">₱0.00</span>
                             </td>
                             <td>
                                 <input type="date" 
                                        class="form-control form-control-sm expiry-input" 
+                                       value="<?= $defaultExpiryDate ?>"
                                        min="<?= date('Y-m-d') ?>"
                                        data-product-id="<?= $p['id'] ?>"
                                        style="width: 150px;">
@@ -74,7 +91,8 @@
                                         class="btn btn-sm btn-success add-stock-btn" 
                                         data-product-id="<?= $p['id'] ?>"
                                         data-product-name="<?= esc($p['name']) ?>"
-                                        data-product-unit="<?= esc($p['unit'] ?? '') ?>">
+                                        data-product-unit="<?= esc($p['unit'] ?? '') ?>"
+                                        data-cost-price="<?= $costPrice ?>">
                                     <i class="bi bi-plus-circle"></i> Add
                                 </button>
                             </td>
@@ -206,6 +224,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Clear inputs
                     quantityInput.value = '';
                     expiryInput.value = '';
+                    // Reset total cost display
+                    const productId = this.getAttribute('data-product-id');
+                    const totalCostSpan = document.getElementById(`total-cost-${productId}`);
+                    if (totalCostSpan) {
+                        totalCostSpan.textContent = '₱0.00';
+                        totalCostSpan.className = 'badge bg-secondary total-cost';
+                    }
                     // Reload page after 1 second to update stock display
                     setTimeout(() => {
                         window.location.reload();
@@ -272,6 +297,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 const addBtn = row.querySelector('.add-stock-btn');
                 if (addBtn) {
                     addBtn.click();
+                }
+            }
+        });
+    });
+
+    // Calculate total cost when quantity changes
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('input', function() {
+            const row = this.closest('tr');
+            const productId = this.getAttribute('data-product-id');
+            const costPrice = parseFloat(this.getAttribute('data-cost-price')) || 0;
+            const quantity = parseFloat(this.value) || 0;
+            const totalCost = quantity * costPrice;
+            
+            // Update total cost display
+            const totalCostSpan = document.getElementById(`total-cost-${productId}`);
+            if (totalCostSpan) {
+                totalCostSpan.textContent = `₱${totalCost.toFixed(2)}`;
+                
+                // Add visual feedback for non-zero costs
+                if (totalCost > 0) {
+                    totalCostSpan.className = 'badge bg-primary text-white total-cost';
+                } else {
+                    totalCostSpan.className = 'badge bg-secondary total-cost';
                 }
             }
         });

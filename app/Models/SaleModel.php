@@ -20,6 +20,9 @@ class SaleModel extends Model
         'discount',
         'tax',
         'total_amount',
+        'receipt_number',
+        'customer_payment',
+        'change_amount',
         'created_at',
     ];
 
@@ -66,11 +69,13 @@ class SaleModel extends Model
 
     // Data casting
     protected array $casts = [
-        'id'          => 'int',
-        'subtotal'    => 'float',
-        'discount'    => 'float',
-        'tax'         => 'float',
-        'total_amount' => 'float',
+        'id'             => 'int',
+        'subtotal'       => 'float',
+        'discount'       => 'float',
+        'tax'            => 'float',
+        'total_amount'   => 'float',
+        'customer_payment' => '?float', // nullable float
+        'change_amount'  => '?float',  // nullable float
     ];
 
     /**

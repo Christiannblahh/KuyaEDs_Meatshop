@@ -161,8 +161,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
+                    <a class="nav-link<?= ($segment === '' || $segment === 'dashboard') ? ' active' : '' ?>" href="<?= site_url('/') ?>">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link<?= $segment === 'order' ? ' active' : '' ?>" href="<?= site_url('order') ?>">
-                        <i class="bi bi-menu-button-wide"></i> Order
+                        <i class="bi bi-menu-button-wide"></i> Place Order
                     </a>
                 </li>
                 <li class="nav-item">
@@ -172,8 +177,11 @@
                     <a class="nav-link<?= $segment === 'inventory' ? ' active' : '' ?>" href="<?= site_url('inventory') ?>">Inventory</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link<?= $segment === 'sales' ? ' active' : '' ?>" href="<?= site_url('sales/create') ?>">Record Sale</a>
+                    <a class="nav-link<?= $segment === 'order' && strpos($currentPath, 'order/orders') !== false ? ' active' : '' ?>" href="<?= site_url('order/orders') ?>">
+                        <i class="bi bi-list-ul"></i> Orders
+                    </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link<?= strpos($currentPath, 'reports/sales') !== false ? ' active' : '' ?>" href="<?= site_url('reports/sales') ?>">Sales Reports</a>
                 </li>

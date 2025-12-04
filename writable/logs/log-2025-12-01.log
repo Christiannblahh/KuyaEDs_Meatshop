@@ -1,0 +1,41 @@
+CRITICAL - 2025-12-01 03:18:19 --> CodeIgniter\Exceptions\InvalidArgumentException: Field "customer_payment" is not nullable, but null was passed.
+[Method: GET, Route: /]
+in SYSTEMPATH\DataCaster\DataCaster.php on line 144.
+ 1 SYSTEMPATH\DataConverter\DataConverter.php(80): CodeIgniter\DataCaster\DataCaster->castAs(null, 'customer_payment', 'get')
+ 2 SYSTEMPATH\BaseModel.php(1934): CodeIgniter\DataConverter\DataConverter->fromDataSource([...])
+ 3 SYSTEMPATH\Model.php(291): CodeIgniter\BaseModel->convertToReturnType([...], 'array')
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Home.php(43): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Home->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 ROOTPATH\index.php(8): require('C:\\xampp\\htdocs\\KuyaEDsMeatshop\\public\\index.php')
+ERROR - 2025-12-01 03:23:46 --> mysqli_sql_exception: Duplicate entry '' for key 'receipt_number' in C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `sa...', 0)
+#1 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `sa...')
+#2 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `sa...')
+#3 C:\xampp\htdocs\KuyaEDsMeatshop\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `sa...', Array, false)
+#4 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\KuyaEDsMeatshop\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\KuyaEDsMeatshop\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\KuyaEDsMeatshop\app\Controllers\Order.php(208): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(933): App\Controllers\Order->processPayment()
+#9 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+#10 C:\xampp\htdocs\KuyaEDsMeatshop\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\KuyaEDsMeatshop\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\KuyaEDsMeatshop\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-01 14:35:20 --> TypeError: App\Controllers\Order::receipt(): Return value must be of type string, CodeIgniter\HTTP\RedirectResponse returned
+[Method: GET, Route: order/receipt/1]
+in APPPATH\Controllers\Order.php on line 274.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Order->receipt('1')
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Order))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

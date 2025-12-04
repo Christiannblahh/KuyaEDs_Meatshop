@@ -82,11 +82,15 @@ class Inventory extends BaseController
                 ]);
             }
             
+            // Calculate cost price for expense tracking
+            $costPrice = get_product_cost_price($product['name']) ?? 0.00;
+            
             // Prepare batch data
             $batchData = [
                 'product_id' => $productId,
                 'quantity' => $quantity,
                 'remaining_quantity' => $quantity,
+                'cost_price' => $costPrice,
                 'created_at' => date('Y-m-d H:i:s'),
             ];
             
@@ -241,11 +245,15 @@ class Inventory extends BaseController
                 ]);
             }
 
+            // Calculate cost price for expense tracking
+            $costPrice = get_product_cost_price($product['name']) ?? 0.00;
+
             // Prepare data for insertion
             $batchData = [
                 'product_id'         => $productId,
                 'quantity'           => $quantity,
                 'remaining_quantity' => $quantity,
+                'cost_price'         => $costPrice,
                 'created_at'         => date('Y-m-d H:i:s'),
             ];
 
@@ -322,6 +330,78 @@ class Inventory extends BaseController
             'title'   => 'Add Stock - Kuya EDs',
             'content' => view('inventory/add_stock', $data),
         ]);
+    }
+
+    /**
+     * Discard a stock batch (set remaining quantity to 0)
+     */
+    public function discardBatch()
+    {
+        // Check if this is an AJAX/JSON request
+        if ($this->request->getMethod() === 'post' || $this->request->isAJAX()) {
+            $this->response->setContentType('application/json');
+            
+            try {
+                // Get and validate batch ID
+                $batchId = (int) $this->request->getPost('batch_id');
+                
+                if ($batchId <= 0) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Invalid batch ID'
+                    ]);
+                }
+                
+                // Verify batch exists with product info
+                $batch = $this->batches->select('stock_batches.*, products.name as product_name')
+                    ->join('products', 'products.id = stock_batches.product_id')
+                    ->find($batchId);
+                    
+                if (!$batch) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Stock batch not found'
+                    ]);
+                }
+                
+                // Check if batch has remaining quantity
+                if ((float) $batch['remaining_quantity'] <= 0) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'This batch has no remaining stock to discard'
+                    ]);
+                }
+                
+                // Set remaining quantity to 0 (discard all)
+                $result = $this->batches->update($batchId, [
+                    'remaining_quantity' => 0
+                ]);
+                
+                if ($result) {
+                    log_message('info', "Stock batch {$batchId} ({$batch['product_name']}) discarded successfully");
+                    
+                    return $this->response->setJSON([
+                        'success' => true,
+                        'message' => 'Stock batch discarded successfully'
+                    ]);
+                } else {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Failed to update stock batch'
+                    ]);
+                }
+                
+            } catch (\Exception $e) {
+                log_message('error', 'Discard batch error: ' . $e->getMessage());
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Error discarding stock batch: ' . $e->getMessage()
+                ]);
+            }
+        }
+        
+        // If not POST request, redirect to inventory
+        return redirect()->to(site_url('inventory'));
     }
 }
 
